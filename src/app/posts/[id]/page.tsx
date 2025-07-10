@@ -1,10 +1,8 @@
-function Posts() {
-  return (
-    <ul>
-      <li>게시글1</li>
-      <li>게시글2</li>
-      <li>게시글3</li>
-    </ul>
-  );
+"use client";
+import { useState } from "react";
+
+function PostDetail() {
+  useState;
+  return <>게시글 상세</>;
 }
-export default Posts;
+export default PostDetail;

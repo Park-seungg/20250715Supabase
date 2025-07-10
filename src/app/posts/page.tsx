@@ -1,4 +1,14 @@
+"use client";
+import { useState } from "react";
+
 function Posts() {
-  return <>게시글 목록</>;
+  useState;
+  return (
+    <ul>
+      <li>게시글1</li>
+      <li>게시글2</li>
+      <li>게시글3</li>
+    </ul>
+  );
 }
 export default Posts;

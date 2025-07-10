@@ -1,15 +1,20 @@
 "use client";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { supabase } from "../../lib/supabse";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("https://dummyjson.com/posts")
-      .then((res) => res.json())
-      .then((res) => setPosts(res.posts));
-  }, []); // 생명주기에 따라 작동, 마지막 []는 의존배열 : 계속 받아오는 것을 막아준다.
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const { data, error } = await supabase.from("posts").select("*");
+    setPosts(data);
+  };
 
   return (
     <ul>
@@ -27,4 +32,5 @@ function Posts() {
     </ul>
   );
 }
+
 export default Posts;

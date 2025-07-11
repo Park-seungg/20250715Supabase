@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 function PostDetail() {
   const [post, setPost] = useState({});
+  const [comments, setComments] = useState([]);
   const params = useParams();
   const { id } = params;
 
@@ -19,8 +20,14 @@ function PostDetail() {
     setPost(data);
   };
 
+  const fetchComments = async () => {
+    const { data, error } = await supabase.from("comments").select("*");
+    setComments(data);
+  };
+
   useEffect(() => {
     fetchData();
+    fetchComments();
   }, []);
 
   return (
@@ -28,6 +35,13 @@ function PostDetail() {
       <h1>{id}번</h1>
       <div className="text-2xl">{post.title}</div>
       <p>{post.contents}</p>
+      <ul>
+        {comments.map((comment) => (
+          <li key={comment.id} className="text-xs underline">
+            {comment.contents}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

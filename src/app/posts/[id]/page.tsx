@@ -21,7 +21,10 @@ function PostDetail() {
   };
 
   const fetchComments = async () => {
-    const { data, error } = await supabase.from("comments").select("*");
+    const { data, error } = await supabase
+      .from("comments")
+      .select("*")
+      .eq("post_id", id);
     setComments(data);
   };
 
@@ -34,11 +37,11 @@ function PostDetail() {
     <>
       <h1>{id}번</h1>
       <div className="text-2xl">{post.title}</div>
-      <p>{post.contents}</p>
+      <p>{post.content}</p>
       <ul>
         {comments.map((comment) => (
           <li key={comment.id} className="text-xs underline">
-            {comment.contents}
+            {comment.content}
           </li>
         ))}
       </ul>

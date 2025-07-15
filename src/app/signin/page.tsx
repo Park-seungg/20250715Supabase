@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import { supabase } from "../../lib/supabase";
+import { useRouter } from "next/navigation";
 
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +23,7 @@ function Signin() {
       console.log(error);
     } else {
       alert("로그인 성공");
+      router.push("/");
     }
   };
   return (

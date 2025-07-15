@@ -18,6 +18,16 @@ function Nav() {
     };
 
     getUser();
+
+    // 인증 상태(로그인/로그아웃) 변경을 감지하는 리스너너
+    // session? -> 오류때매 null이 들어올 수 있다는 것을 표시
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+    // 클인업 함수 -> 컴포넌트가 언마운트 되거나 effect가 재실행되기 전전
+    return () => subscription.unsubscribe();
   }, []);
 
   const router = useRouter();

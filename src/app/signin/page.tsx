@@ -1,22 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { supabase } from "../../lib/supabase";
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-function Signin() {
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const router = useRouter();
+  const { signIn } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } = await signIn(email, password);
 
     if (error) {
       alert(error.message);
@@ -26,21 +22,20 @@ function Signin() {
       router.push("/");
     }
   };
+
   return (
     <>
       <h1>로그인</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleOnSubmit}>
         <input
           type="email"
           name="email"
-          value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="EMAIL"
         />
         <input
           type="password"
           name="password"
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="PASSWORD"
         />
@@ -49,4 +44,5 @@ function Signin() {
     </>
   );
 }
-export default Signin;
+
+export default SignIn;
